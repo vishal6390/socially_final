@@ -38,6 +38,10 @@ const PostSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    commentId: {
+        type: String,
+        default: ""
+    }
 });
 
 module.exports = mongoose.model('Post', PostSchema);

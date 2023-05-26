@@ -74,7 +74,7 @@ export const Navbar = ({isChat}) => {
             </Flex>
         </Box>
         <Spacer />
-        <InputGroup w='600px'>
+        <InputGroup w='645px' ml='-45px'>
             <InputLeftElement
             pointerEvents='none'
             children={<SearchIcon ml='15px' color='gray.300' />}

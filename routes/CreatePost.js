@@ -1,12 +1,15 @@
 const router = require("express").Router();
 const Post = require('../models/Post')
+const Comment = require('../models/Comment')
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
     const {id, caption, postPic, profilePic, username, current_time, newsLink} = req.body
 
-    // console.log(req.body)
+    const comment = new Comment({commentArray: []})
+    const savedComment = await comment.save()
 
-    // const current_time = Datae.now()
+    
+
     const post = new Post({
         userId: id,
         profilePic: profilePic,
@@ -14,7 +17,8 @@ router.post("/", (req, res) => {
         postPic: postPic,
         username: username,
         current_time,
-        newsLink
+        newsLink,
+        commentId: savedComment._id
     })
 
     try {

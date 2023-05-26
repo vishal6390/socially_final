@@ -18,6 +18,8 @@ const saveChatMessageRoute = require('./routes/SaveChatMessage')
 const getAllChatsRoute = require('./routes/GetAllChats')
 const deletePost = require('./routes/DeletePost')
 const verifyMail = require('./routes/VerifyMail')
+const addComment = require('./routes/AddComment')
+const getAllComments = require('./routes/GetAllComments')
 
 const app = express()
 const cors = require('cors');
@@ -57,4 +59,6 @@ app.use('/api/saveChatMessage', saveChatMessageRoute)
 app.use('/api/getAllChats', getAllChatsRoute)
 app.use('/api/deletePost', deletePost)
 app.use('/api/verifyMail', verifyMail)
+app.use('/api/addComment', addComment)
+app.use('/api/getAllComments', getAllComments)
 

@@ -29,7 +29,7 @@ const SingleNewsItem = ({news}) => {
     axios.post("http://localhost:9002/api/createPost", obj)
     .then(res => {
     // window.location.reload()
-    history.push("/")
+    history.push("/profile")
     // toast.success(res.data.message)
     })
     .catch(err => {

@@ -26,11 +26,17 @@ router.post("/", async (req, res) => {
             tempArray = conversation2.messageArray
             // res.send({message: "all chats fetched successfully", messageArray: conversation2.messageArray})
         }
-        tempArray.sort((a, b) => {
-            return a.time - b.time
-        })
+        // tempArray.sort((a, b) => {
+        //     return a.time - b.time
+        // })
 
-        res.send({messageArray: tempArray})
+        const sortedChatAccordingTime = tempArray.sort((a, b) => {
+            const dateA = new Date(a.time);
+            const dateB = new Date(b.time);
+            return dateA - dateB;
+        });
+
+        res.send({messageArray: sortedChatAccordingTime})
 
     } catch(err) {
         console.log(err)

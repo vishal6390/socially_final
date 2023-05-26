@@ -26,7 +26,6 @@ const sendVerifyMail = async (name, email, user_id) => {
             html: '<p>Hi '+name+' , Please click here to <a href="http://localhost:9002/api/verifyMail?id='+user_id+'"> Verify </a> your mail.</p>'
         }
         transporter.sendMail(message)
-        
     } catch (err) {
         console.log(err)
     }

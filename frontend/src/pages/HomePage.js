@@ -7,6 +7,7 @@ import { Auth } from '../context/AuthContext';
 import { Textarea } from '@chakra-ui/react'
 import {toast} from 'react-toastify'
 import axios from 'axios'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 export const HomePage = () => {
 
@@ -14,6 +15,8 @@ export const HomePage = () => {
     const [caption, setCaption] = useState('')
     const [image, setImage] = useState("")
     const [loading, setLoading] = useState(false)
+
+    const history = useHistory()
 
     const handleUpload = () => {
         if(!caption){
@@ -46,8 +49,8 @@ export const HomePage = () => {
           
                    axios.post("http://localhost:9002/api/createPost", obj)
                   .then(res => {
-                    window.location.reload()
-                    // toast.success(res.data.message)
+                    history.push('/profile')
+                    toast.success(res.data.message)
                     onClose()
                   })
                   .catch(err => {
@@ -75,15 +78,16 @@ export const HomePage = () => {
     gridTemplateColumns={'25% 45% 30%'}
     h='100vh'
     color='black'
+    bgColor='gray.100'
     >
-    <GridItem bg='gray.100' area={'nav'}>
+    <GridItem bgColor='gray.100' area={'nav'}>
         <Navbar />
     </GridItem>
-    <GridItem  bg='gray.100' area={'leftbar'}>
+    <GridItem  bgColor='gray.100' area={'leftbar'}>
         <Leftbar />
     </GridItem>
-    <GridItem bg='gray.100' area={'main'}>
-        <Box position='relative'>
+    <GridItem bgColor='gray.100' area={'main'}>
+        <Box>
             <AbsoluteCenter p='4' axis='horizontal'>
                 
                 <Stack>
@@ -94,7 +98,7 @@ export const HomePage = () => {
             </AbsoluteCenter>
         </Box>
     </GridItem>
-    <GridItem  bg='gray.100' area={'rightbar'}>
+    <GridItem  bgColor='gray.100' area={'rightbar'}>
         {/* rightbar */}
     </GridItem>
     </Grid>

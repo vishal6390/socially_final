@@ -51,15 +51,15 @@ const Leftbar = () => {
         requestUserId: requestUser._id
       }
 
-      await axios.post("/api/friendArrayUpdate/currentUserUpdate/1", obj)
+      await axios.post("http://localhost:9002/api/friendArrayUpdate/currentUserUpdate/1", obj)
       .then(res => console.log(res))
       .catch(err => console.log(err))
 
-      await axios.post("/api/friendArrayUpdate/currentUserUpdate/2", obj)
+      await axios.post("http://localhost:9002/api/friendArrayUpdate/currentUserUpdate/2", obj)
       .then(res => console.log(res))
       .catch(err => console.log(err))
 
-      await axios.post("/api/friendArrayUpdate/requestUserUpdate", obj)
+      await axios.post("http://localhost:9002/api/friendArrayUpdate/requestUserUpdate", obj)
       .then(res => console.log(res))
       .catch(err => console.log(err))
 
