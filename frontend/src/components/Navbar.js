@@ -32,7 +32,7 @@ export const Navbar = ({isChat}) => {
             }
             await axios.post("http://localhost:9002/api/getFilteredData", obj)
             .then(res => {
-                setSearchResult(res.data.res_user)
+                setSearchResult(res.data.res_user.filter(item => item.username !== curr_user.username))
                 setLoading(false)
             })
             .catch(err => {
@@ -115,7 +115,7 @@ export const Navbar = ({isChat}) => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Search Users</ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton/>
           <ModalBody pb={6}>
             
             <Flex>
