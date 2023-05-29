@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react'
-import { Flex, Box, Stack, Spacer, Heading, InputGroup, Image, InputLeftElement, Tooltip, Input, InputRightElement, Skeleton, MenuButton, Menu, Button, Avatar, MenuList, MenuItem, MenuDivider, useDisclosure, Modal, ModalBody, ModalCloseButton, ModalOverlay, ModalContent, ModalHeader, Text, Center} from '@chakra-ui/react';
+import { Flex, Box, Stack, Spacer, useMediaQuery, Heading, InputGroup, Image, InputLeftElement, Tooltip, Input, InputRightElement, Skeleton, MenuButton, Menu, Button, Avatar, MenuList, MenuItem, MenuDivider, useDisclosure, Modal, ModalBody, ModalCloseButton, ModalOverlay, ModalContent, ModalHeader, Text, Center} from '@chakra-ui/react';
 import { ChevronDownIcon, SearchIcon } from '@chakra-ui/icons'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 import {Auth} from '../context/AuthContext'
@@ -12,6 +12,8 @@ export const Navbar = ({isChat}) => {
 
     const history = useHistory()
     const {curr_user, setCurr_user} = useContext(Auth)
+
+    const [isLargerThan800] = useMediaQuery('(min-width: 800px)')
 
     const handleLogout = () => {
         window.localStorage.removeItem('Socially_Current_User')
@@ -74,7 +76,7 @@ export const Navbar = ({isChat}) => {
             </Flex>
         </Box>
         <Spacer />
-        <InputGroup w='645px' ml='-45px'>
+        <InputGroup w='645px' display={isLargerThan800 ? 'inline' : 'none'} ml='-45px' className='navbar-input'>
             <InputLeftElement
             pointerEvents='none'
             children={<SearchIcon ml='15px' color='gray.300' />}

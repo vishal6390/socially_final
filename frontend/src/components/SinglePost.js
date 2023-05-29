@@ -25,7 +25,7 @@ const SinglePost = ({post}) => {
 
   const [commentArray, setCommentArray] = useState()
 
-  TimeAgo.addDefaultLocale(en)
+  TimeAgo.addLocale(en)
   const timeAgo = new TimeAgo('en-US')
 
   const deletePost = () => {

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect, useRef, createRef} from 'react'
 import ScrollableFeed from 'react-scrollable-feed'
 import {Grid, Center, GridItem, Stack, Box, Avatar, Text, Flex, Spacer, Button, Divider, Input} from '@chakra-ui/react';
 import { Navbar } from '../components/Navbar';
@@ -8,7 +8,9 @@ import SingleChatItem from '../components/SingleChatItem';
 
 const ChatPage = () => {
 
-  const [friendsArray, setFriendsArray] = useState([])    
+    const messagesEndRef = createRef()
+
+    const [friendsArray, setFriendsArray] = useState([])    
     const [message, setMessage] = useState("")
     const [friend, setFriend] = useState()
     const [chat, setChat] = useState([])
@@ -16,29 +18,45 @@ const ChatPage = () => {
     const [arrivalMessage, setArrivalMessage] = useState({
         sender: "",
         message: "",
+        senderImage: ""
     })
+
+    const scrollToBottom = () => {
+      const scroll = messagesEndRef.current.scrollHeight - messagesEndRef.current.clientHeight;
+      messagesEndRef.current.scrollTo(0, scroll);
+    };
+
+    useEffect(() => {
+      const scrollFeature = () => {
+          scrollToBottom()
+      }
+      scrollFeature()
+    }, [chat])
 
     useEffect(() => {
         socket.current = io("ws://localhost:8900");
         // socket.current.emit("addUser",id);
         
         socket.current.on("getMessage", (data) => {
-        console.log("grbthbyhtbyhb",data);
+        // console.log("grbthbyhtbyhb",data);
             setArrivalMessage({
             sender: data.senderId,
             message: data.message,
+            senderImage: data.senderImage
         });
         });
     }, []);
     
     useEffect(() => {
         if(friend && arrivalMessage && friend._id === arrivalMessage.sender){
-            console.log("4545454", arrivalMessage)
+            // console.log("4545454", arrivalMessage)
             const obj = {
                 message: arrivalMessage.message,
+                senderImage: arrivalMessage.senderImage,
                 time: Date.now()
             }
-            console.log("yeh mera hai", obj)
+            // console.log("yeh mera hai", obj)
+            // scrollToBottom()
             setChat((prev) => [...prev, obj]);
         }
     }, [arrivalMessage,friend]);
@@ -84,6 +102,7 @@ const ChatPage = () => {
           message: message,
           senderImage: sender.profilePic
       }
+      // console.log(obj)
       setChat((prev) => [...prev, { message: message,
           time: Date.now()
     }]);
@@ -91,6 +110,7 @@ const ChatPage = () => {
       
       await axios.post("http://localhost:9002/api/saveChatMessage", obj);
       socket.current.emit("sendMessage", obj);
+
   
   }
 
@@ -138,7 +158,7 @@ const ChatPage = () => {
                    <Text as='h3' fontSize='25px' mb='20px' mt='20px'>{(friend && friend.username)}</Text>
                  </Center>
                  </Box>
-                 <Stack spacing='10px' h='calc(100vh - 250px)' overflowY='scroll' pl='2' mr='25px' bg='gray.200' borderRadius='10px'>
+                 <Stack spacing='10px' h='calc(100vh - 250px)' overflowY='scroll' ref={messagesEndRef} scrollBehavior='smooth' pl='2' mr='25px' bg='gray.200' borderRadius='10px'>
                       {
                           
                           (chat && chat.map((item, i) => {
